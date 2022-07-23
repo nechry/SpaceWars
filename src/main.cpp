@@ -111,14 +111,13 @@ void setup(void)
   pinMode(BUTTON_UP_PIN, INPUT_PULLUP);
   pinMode(BUTTON_RIGHT_PIN, INPUT_PULLUP);
   pinMode(BUTTON_LEFT_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_B_PIN, INPUT_PULLUP); // fire2 B
-  pinMode(BUTTON_A_PIN, INPUT_PULLUP); // fire1 A
-  pinMode(LED_GREEN_PIN, OUTPUT);       // led2
-  pinMode(LED_RED_PIN, OUTPUT);       // led1
-  pinMode(LED_BLUE_PIN, OUTPUT);       // led3
-  pinMode(BUTTON_CENTER_PIN
-, INPUT_PULLUP); // stick
-  pinMode(BUTTON_1_PIN, INPUT);         // LORA built in buttons
+  pinMode(BUTTON_B_PIN, INPUT_PULLUP);      // fire2 B
+  pinMode(BUTTON_A_PIN, INPUT_PULLUP);      // fire1 A
+  pinMode(LED_GREEN_PIN, OUTPUT);           // led2
+  pinMode(LED_RED_PIN, OUTPUT);             // led1
+  pinMode(LED_BLUE_PIN, OUTPUT);            // led3
+  pinMode(BUTTON_CENTER_PIN, INPUT_PULLUP); // stick
+  pinMode(BUTTON_1_PIN, INPUT);             // LORA built in buttons
   pinMode(BUTTON_2_PIN, INPUT);
   digitalWrite(LED_BLUE_PIN, 1);
   tft.init();
@@ -276,7 +275,7 @@ void loop()
   }
 
   if (stage == 1)
-  {                                      // playing stage
+  {                                                   // playing stage
     if (digitalRead(BUTTON_DOWN_PIN) == 0 and y < 94) // Move down
       y = y + speed;
 
