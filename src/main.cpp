@@ -215,8 +215,8 @@ void newLevel()
   tft.pushImage(170, 5, 55, 54, earth[level - 1]);
   tft.pushImage(170, 61, 72, 72, sens);
   delay(2600);
-
-  buttonWait(BUTTON_A_PIN); // wait until button a is pressed.............
+  // wait until button a is pressed.............
+  buttonWait(BUTTON_A_PIN); 
 
   tft.fillScreen(TFT_BLACK);
 
@@ -232,14 +232,15 @@ void newLevel()
 
 void loop()
 {
-
+  // Main screen
   if (stage == 0)
   {
     restart();
     tft.fillScreen(TFT_BLACK);
     tft.setSwapBytes(true);
     tft.pushImage(0, 0, 240, 135, back2);
-    buttonWait(BUTTON_A_PIN); // wait until button a is pressed.............
+    // wait until button a is pressed.............
+    buttonWait(BUTTON_A_PIN); 
     tft.fillScreen(TFT_BLACK);
     tft.fillScreen(TFT_BLACK);
     tft.setCursor(0, 0, 4);
@@ -257,25 +258,21 @@ void loop()
     tft.pushImage(170, 5, 55, 54, earth[level - 1]);
     tft.pushImage(170, 61, 72, 72, sens);
     delay(1000);
-
-    buttonWait(BUTTON_A_PIN); // wait until button a is pressed.............
-
+    // wait until button a is pressed.............
+    buttonWait(BUTTON_A_PIN);
     tft.fillScreen(TFT_BLACK);
-
     tft.drawLine(0, 16, 240, 16, TFT_LIGHTBLUE);
     tft.drawLine(0, 134, 240, 134, TFT_LIGHTBLUE);
-
     tft.setCursor(200, 0, 2);
     tft.print(score);
-
     tft.fillRect(120, 3, 70, 7, TFT_GREEN);
     tft.drawRect(119, 2, 72, 9, TFT_GREY);
 
     stage = 1;
   }
-
+  // playing stage
   if (stage == 1)
-  {                                                   // playing stage
+  {                                                   
     if (digitalRead(BUTTON_DOWN_PIN) == 0 and y < 94) // Move down
       y = y + speed;
 
@@ -293,7 +290,6 @@ void loop()
       if (debounceFireButton == 0)
       {
         debounceFireButton = 1;
-
         bulletX[counter] = x + 34;
         bulletY[counter] = y + 15;
         counter = counter + 1;
@@ -318,7 +314,7 @@ void loop()
     else
       debounceRocketButton = 0;
 
-    if (digitalRead(BUTTON_2_PIN) == 0) // button 35 , on and off sound
+    if (digitalRead(BUTTON_2_PIN) == 0) // onboard button toggle sound effects
     {
       if (debounceSoundButton == 0)
       {
@@ -330,23 +326,23 @@ void loop()
       debounceSoundButton = 0;
 
     for (int i = 0; i < 30; i++)
-    { // drawStars..........................................
+    { 
+      // drawStars..........................................
       tft.drawPixel(spaceX[i], spaceY[i], TFT_BLACK);
       spaceX[i] = spaceX[i] - 0.5;
       tft.drawPixel(spaceX[i], spaceY[i], TFT_GREY);
       if (spaceX[i] < 0)
       {
         tft.drawPixel(spaceX[i], spaceY[i], TFT_BLACK);
-
         spaceX[i] = 244;
       }
     }
-
     tft.pushImage(x, y, 49, 40, brod1);
     tft.pushImage(enemyX, enemyY, 55, 54, earth[level - 1]);
 
     for (int i = 0; i < 10; i++)
-    { // firing bullets
+    { 
+      // firing bullets
       if (bulletX[i] > 0)
       {
         tft.pushImage(bulletX[i], bulletY[i], 8, 8, bullet);
@@ -355,9 +351,9 @@ void loop()
       if (bulletX[i] > 240)
         bulletX[i] = -30;
     }
-
     for (int i = 0; i < 10; i++)
-    { // firing rockets
+    { 
+      // firing rockets
       if (rocketX[i] > 0)
       {
         tft.pushImage(rocketX[i], rocketY[i], 24, 12, rocket);
@@ -366,12 +362,10 @@ void loop()
       if (rocketX[i] > 240)
         rocketX[i] = -30;
     }
-
-    // delay(1);
     int tr = 0;
-
-    for (int j = 0; j < 10; j++) // did my bullet hit enemy
+    for (int j = 0; j < 10; j++)
     {
+      // did my bullet hit enemy
       if (bulletX[j] > enemyX + 20 && bulletY[j] > enemyY + 2 && bulletY[j] < enemyY + 52)
       {
         tft.pushImage(bulletX[j], bulletY[j], 12, 12, ex2);
@@ -410,9 +404,9 @@ void loop()
         blinkTime = 1;
       }
     }
-
-    for (int j = 0; j < 10; j++) // did my ROCKET hit enemy
+    for (int j = 0; j < 10; j++) 
     {
+      // did my ROCKET hit enemy
       if (rocketX[j] + 18 > enemyX && rocketY[j] > enemyY + 2 && rocketY[j] < enemyY + 52)
       {
         tft.pushImage(rocketX[j], rocketY[j], 24, 24, explosion);
@@ -426,8 +420,6 @@ void loop()
           delay(40);
         }
         tft.fillRect(rocketX[j], rocketY[j], 24, 24, TFT_BLACK);
-        // delay(30);
-
         rocketX[j] = -50;
         score = score + 12;
         tft.setCursor(200, 0, 2);
@@ -453,9 +445,9 @@ void loop()
         blinkTime = 1;
       }
     }
-
-    for (int j = 0; j < 10; j++) // Am I hit
+    for (int j = 0; j < 10; j++) 
     {
+      // Am I hit
       if (energyBulletX[j] < x + 30 && energyBulletX[j] > x + 4 && energyBulletY[j] > y + 4 && energyBulletY[j] < y + 36)
       {
         energyBulletX[j] = -50;
@@ -475,7 +467,6 @@ void loop()
           tft.fillScreen(TFT_BLACK);
           stage = 2;
         }
-
         digitalWrite(LED_RED_PIN, 1);
         blinkTime = 1;
         if (sound == 1)
@@ -508,14 +499,14 @@ void loop()
     }
 
     for (int i = 0; i < 10; i++)
-    { // enemy shoots
+    { 
+      // enemy shoots
       if (energyBulletX[i] > -10)
       {
         tft.pushImage(energyBulletX[i], energyBulletY[i], 7, 7, enemyBullet);
         energyBulletX[i] = energyBulletX[i] - enemyBulletSpeed;
       }
     }
-
     for (int i = 0; i < 4; i++) // draw life
       tft.pushImage(i * 14, liveIndex[i], 12, 11, life);
     for (int i = 0; i < 3; i++) // draw ricon
@@ -539,9 +530,9 @@ void loop()
     if (enemyCounter == 9)
       enemyCounter = 0;
   }
-  if (stage == 2) // game over stage
+  // game over stage
+  if (stage == 2) 
   {
-
     tft.fillScreen(TFT_BLACK);
     tft.pushImage(0, 0, 240, 135, gameOver);
     tft.setCursor(24, 54, 2);
